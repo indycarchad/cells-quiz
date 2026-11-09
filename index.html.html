@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Unit 3 Cells practice quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E8F2EC;--surface:#F6FBF8;--ink:#14332B;--muted:#4B6A61;--line:#C6DDD2;
+  --accent:#1F7A63;--accent-ink:#FFFFFF;--membrane:#6B4FBB;--membrane-soft:#DDD5F5;
+  --good-bg:#D7F0E1;--good:#17633F;--bad-bg:#F8DDD7;--bad:#A3321E;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1F1B;--surface:#17302A;--ink:#E3F1EB;--muted:#9FBFB4;--line:#2A4840;
+    --accent:#4CC9A0;--accent-ink:#0F1F1B;--membrane:#A994EE;--membrane-soft:#2D2650;
+    --good-bg:#16402E;--good:#8BE0B4;--bad-bg:#4A1F18;--bad:#F4A493;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1F1B;--surface:#17302A;--ink:#E3F1EB;--muted:#9FBFB4;--line:#2A4840;
+  --accent:#4CC9A0;--accent-ink:#0F1F1B;--membrane:#A994EE;--membrane-soft:#2D2650;
+  --good-bg:#16402E;--good:#8BE0B4;--bad-bg:#4A1F18;--bad:#F4A493;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Lexend",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.55;-webkit-text-size-adjust:100%}
+main{max-width:560px;margin:0 auto;padding:1.5rem 1.25rem 3rem}
+header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+.cell{flex:0 0 auto;width:84px;height:84px;position:relative}
+.cell svg{width:100%;height:100%;transform:rotate(-90deg)}
+.cell .nucleus{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+.nucleus b{font-size:22px;font-weight:600}
+.nucleus span{font-size:11px;color:var(--muted)}
+h1{font-size:1.35rem;font-weight:600;margin:0;line-height:1.25}
+.sub{margin:.2rem 0 0;color:var(--muted);font-size:.9rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1.25rem}
+.q{font-size:1.15rem;font-weight:500;margin:0 0 1rem;line-height:1.45}
+.opt{display:flex;align-items:flex-start;gap:.75rem;width:100%;text-align:left;font:inherit;font-size:1rem;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:.8rem .9rem;margin:0 0 .6rem;cursor:pointer;min-height:52px}
+.opt:hover{border-color:var(--accent)}
+.opt:focus-visible,.btn:focus-visible{outline:3px solid var(--membrane);outline-offset:2px}
+.opt .k{flex:0 0 auto;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:600;color:var(--muted)}
+.opt.right{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.right .k{border-color:var(--good);color:var(--good)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.opt.wrong .k{border-color:var(--bad);color:var(--bad)}
+.opt[disabled]{cursor:default}
+.fb{margin:.75rem 0 0;font-size:.95rem;color:var(--muted);min-height:1.5em}
+.fb strong{font-weight:600}
+.err{margin:.4rem 0 0;font-size:.85rem;color:var(--bad);min-height:1.2em}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;gap:1rem}
+.score{font-size:.9rem;color:var(--muted)}
+.btn{font:inherit;font-size:1rem;font-weight:500;background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:.75rem 1.4rem;min-height:48px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.done{text-align:center}
+.big{font-size:3rem;font-weight:600;margin:.25rem 0 0;line-height:1}
+.verdict{color:var(--muted);margin:.5rem 0 1.25rem}
+.review{text-align:left;border-top:1px solid var(--line);margin-top:1rem;padding-top:1rem}
+.review h2{font-size:1rem;font-weight:600;margin:0 0 .5rem}
+.review p{font-size:.9rem;margin:0 0 .75rem;color:var(--muted)}
+.review p b{color:var(--ink);font-weight:500}
+.best{font-size:.85rem;color:var(--muted);margin:1rem 0 0}
+@media (prefers-reduced-motion:no-preference){#ring{transition:stroke-dashoffset .4s ease}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div class="cell" aria-hidden="true">
+    <svg viewBox="0 0 84 84">
+      <circle cx="42" cy="42" r="36" fill="none" stroke="var(--membrane-soft)" stroke-width="7"/>
+      <circle id="ring" cx="42" cy="42" r="36" fill="none" stroke="var(--membrane)" stroke-width="7" stroke-linecap="round" stroke-dasharray="226.2" stroke-dashoffset="226.2"/>
+    </svg>
+    <div class="nucleus"><b id="num">1</b><span>of 20</span></div>
+  </div>
+  <div>
+    <h1>Unit 3 Cells practice quiz</h1>
+    <p class="sub">Cells, membranes, transport, and viruses. A new mix of questions every round.</p>
+  </div>
+</header>
+
+<section class="card" id="quiz" aria-live="polite">
+  <p class="q" id="q">Loading questions…</p>
+  <div id="opts"></div>
+  <p class="fb" id="fb"></p>
+  <p class="err" id="err"></p>
+  <div class="row">
+    <span class="score" id="sc">Score: 0</span>
+    <button class="btn" id="next">Next question</button>
+  </div>
+</section>
+
+<section class="card done" id="done" hidden></section>
+</main>
+
+<script>
+const Q=[
+["What is the smallest unit that can carry out all the processes of life?",["Cell","Organelle","Tissue","Atom"],"The cell is the basic unit of life."],
+["Who looked at cork under a microscope and named the little boxes “cells”?",["Robert Hooke","Anton van Leeuwenhoek","Rudolf Virchow","Theodor Schwann"],"Hooke named cells after looking at cork."],
+["Who was the first to observe microorganisms using simple microscopes?",["Anton van Leeuwenhoek","Robert Hooke","Matthias Schleiden","Rudolf Virchow"],"Leeuwenhoek saw tiny living things in pond water."],
+["Which scientist concluded that all plants are made of cells?",["Matthias Schleiden","Theodor Schwann","Rudolf Virchow","Robert Hooke"],"Schleiden studied plants. Schwann studied animals."],
+["Which scientist said living cells come only from pre-existing cells?",["Rudolf Virchow","Theodor Schwann","Robert Hooke","Matthias Schleiden"],"Virchow: cells come from cells."],
+["Cells with no true nucleus and no membrane-bound organelles are called…",["Prokaryotic","Eukaryotic","Organelles","Tissues"],"Pro = no nucleus. Eu = do have a nucleus."],
+["Which group does NOT have eukaryotic cells?",["Bacteria","Fungi","Plants","Protists"],"Bacteria are prokaryotes. Animals, plants, fungi, and protists are eukaryotes."],
+["Which order goes from smallest to largest?",["Cell, tissue, organ, organ system","Tissue, cell, organ, organ system","Cell, organ, tissue, organ system","Organ, tissue, cell, organ system"],"Cells form tissues, tissues form organs, organs form organ systems."],
+["A solution with MORE solute than the cell is…",["Hypertonic","Hypotonic","Isotonic","Equilibrium"],"Hyper = more solute."],
+["What happens to an animal cell placed in a hypertonic solution?",["It shrinks","It swells and may burst","Nothing changes","It divides"],"Water moves out toward the saltier side, so the cell shrinks."],
+["A red blood cell is placed in pure water. What happens?",["Water rushes in and it may burst","Water leaves and it shrinks","Nothing happens","Salt rushes in"],"Pure water is hypotonic, so water moves into the cell."],
+["A cell has a solute concentration of 40. Which beaker is isotonic to it?",["Beaker with 40","Beaker with 80","Beaker with 5","Beaker with 0"],"Isotonic means equal concentrations."],
+["A bag is 90% water and the beaker is 80% water. Which way does water move?",["Out of the bag into the beaker","Into the bag","Both ways equally","It doesn’t move"],"Water moves from more water to less water (toward more solute)."],
+["Diffusion and osmosis are examples of…",["Passive transport, no energy needed","Active transport using ATP","Endocytosis","Cell division"],"Molecules move high to low on their own, so no energy is used."],
+["Which process uses ATP to move molecules from low to high concentration?",["Active transport","Simple diffusion","Facilitated diffusion","Osmosis"],"Moving against the gradient needs energy from ATP."],
+["Facilitated diffusion moves molecules…",["Through a protein channel, with no energy","Through a protein pump, using ATP","Straight through the lipid bilayer, using ATP","Only out of the cell"],"It uses a helper protein but is still passive."],
+["What happens to molecules once equilibrium is reached?",["They keep moving equally in both directions","They stop moving completely","They all move into the cell","They all move out of the cell"],"Movement continues, but there’s no net change."],
+["A beaker has a 25% salt solution. What is its water concentration?",["75%","25%","100%","50%"],"100% minus 25% salt = 75% water."],
+["Which molecule is mostly responsible for bags changing size?",["Water","Glucose","Salt","ATP"],"Water moving in or out makes the bag swell or shrink."],
+["Why can a virus infect only certain types of cells?",["Its surface proteins must fit receptors on the cell","It can only fit through big pores","It needs cells with no nucleus","It only infects cells that are dividing"],"It works like a lock and key."],
+["A retrovirus, like HIV, has which genetic material?",["RNA, turned into DNA by reverse transcriptase","DNA only","Proteins only","No genetic material"],"Retroviruses copy their RNA into DNA that joins the host’s DNA."],
+["In the lysogenic cycle, the virus…",["Hides its DNA inside the host’s DNA","Bursts the cell right away","Makes its own food","Uses antibiotics to spread"],"It’s copied with the cell each time it divides, until it becomes active."],
+["What is the first stage of the lytic cycle?",["Attachment","Assembly","Release","Replication"],"The virus must attach to the host cell first."],
+["Are antibiotics effective against viruses?",["No, they only work on bacteria","Yes, always","Only against the flu","Only against chicken pox"],"Antibiotics target bacteria, not viruses."],
+["Strep throat is caused by…",["Bacteria","A virus","A fungus","A protist"],"Strep is a bacterial infection."],
+["Why do we need a new flu shot every year?",["The flu virus mutates and changes","The shot turns into a virus","Your body forgets all vaccines","Flu shots only last a month"],"New strains appear, so the vaccine is updated each year."],
+["Which is a nonliving trait of viruses?",["They are not made of cells","They contain genetic material","They can mutate","They can reproduce inside a host"],"The other three are the living-like traits."],
+["What does a vaccine do?",["Trains the immune system to make antibodies and memory cells","Kills every virus in your body","Works the same as an antibiotic","Gives you the full disease"],"Then your body can fight the real virus quickly."]
+];
+const N=20,C=226.2,L="ABCD";
+let order=[],i=0,score=0,picked=false,missed=[];
+const $=id=>document.getElementById(id);
+function shuffle(a){a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]];}return a;}
+function getBest(){try{return parseInt(localStorage.getItem("cellsBest")||"",10)||0;}catch(e){return 0;}}
+function setBest(v){try{localStorage.setItem("cellsBest",String(v));}catch(e){}}
+function ring(n){$("ring").style.strokeDashoffset=C*(1-n/N);}
+function start(){order=shuffle(Q).slice(0,N);i=0;score=0;missed=[];$("done").hidden=true;$("quiz").hidden=false;show();}
+function show(){
+  picked=false;const [q,opts]=order[i];
+  $("num").textContent=i+1;ring(i);
+  $("q").textContent=q;$("fb").textContent="";$("err").textContent="";
+  $("sc").textContent="Score: "+score;
+  const box=$("opts");box.innerHTML="";
+  shuffle(opts).forEach((o,k)=>{
+    const b=document.createElement("button");b.className="opt";b.type="button";
+    b.innerHTML='<span class="k">'+L[k]+'</span><span></span>';b.lastChild.textContent=o;b.dataset.v=o;
+    b.onclick=()=>pick(b);box.appendChild(b);
+  });
+  $("next").textContent=i===N-1?"See my score":"Next question";
+}
+function pick(b){
+  if(picked)return;picked=true;$("err").textContent="";
+  const [q,opts,why]=order[i];const ok=b.dataset.v===opts[0];
+  if(ok)score++;else missed.push([q,opts[0]]);
+  document.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(x.dataset.v===opts[0])x.classList.add("right");else if(x===b)x.classList.add("wrong");});
+  $("fb").innerHTML='<strong style="color:var('+(ok?'--good':'--bad')+')">'+(ok?"Correct. ":"Not quite. ")+'</strong>';
+  $("fb").appendChild(document.createTextNode(why));
+  $("sc").textContent="Score: "+score;
+}
+$("next").onclick=()=>{
+  if(!picked){$("err").textContent="Pick an answer first";return;}
+  i++;if(i<N)show();else finish();
+};
+function finish(){
+  ring(N);$("num").textContent=N;$("quiz").hidden=true;
+  const pct=Math.round(score/N*100);const prev=getBest();if(score>prev)setBest(score);
+  const d=$("done");d.hidden=false;
+  d.innerHTML='<p class="sub" style="margin:0">Your score</p><p class="big">'+score+' / '+N+'</p>'+
+    '<p class="verdict">'+pct+'%. '+(pct>=90?"You’re ready for the test.":pct>=70?"Almost there. Review the ones below.":"Keep practicing. Every round gets new questions.")+'</p>'+
+    '<button class="btn" id="again" type="button">Try a new set</button>'+
+    '<p class="best">'+(score>prev&&prev>0?"New best score!":"Best score on this device: "+Math.max(score,prev)+" / "+N)+'</p>';
+  if(missed.length){
+    const r=document.createElement("div");r.className="review";r.innerHTML="<h2>Review these</h2>";
+    missed.forEach(([q,a])=>{const p=document.createElement("p");p.textContent=q+" ";const b=document.createElement("b");b.textContent="Answer: "+a;p.appendChild(b);r.appendChild(p);});
+    d.appendChild(r);
+  }
+  $("again").onclick=()=>{start();window.scrollTo(0,0);};
+}
+start();
+</script>
+</body>
+</html>
